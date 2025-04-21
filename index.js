@@ -5,8 +5,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // === שים כאן את הפרטים שלך מ-Google Cloud Console ===
-const CLIENT_ID = 'PASTE_YOUR_CLIENT_ID_HERE';
-const CLIENT_SECRET = 'PASTE_YOUR_CLIENT_SECRET_HERE';
+const CLIENT_ID = '586549896657-pm2labc5dhpcn2i6r5i5914tvb7en28t.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
 const REDIRECT_URI = 'https://gpt-verifier.onrender.com/oauth/callback';
 
 const OAUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
