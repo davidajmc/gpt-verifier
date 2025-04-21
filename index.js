@@ -59,6 +59,30 @@ app.get('/oauth/callback', async (req, res) => {
     res.status(500).send('OAuth flow failed');
   }
 });
+app.get('/verify', async (req, res) => {
+  const authHeader = req.headers.authorization || '';
+  const token = authHeader.replace('Bearer ', '');
+
+  if (!token) return res.status(401).json({ error: 'Missing token' });
+
+  try {
+    const userInfoRes = await fetch(USERINFO_URL, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const user = await userInfoRes.json();
+    const email = user.email || '';
+
+    if (!email.endsWith('@edu.kmc.ac.il')) {
+      return res.status(403).json({ error: 'Unauthorized domain', email, domainVerified: false });
+    }
+
+    res.json({ email, domainVerified: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to verify token' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`OAuth verifier running at http://localhost:${port}`);
